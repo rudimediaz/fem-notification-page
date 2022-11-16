@@ -1,81 +1,48 @@
 :root {
-  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: 400;
+  --clr-red-hsl: 1 90% 64%;
+  --clr-blue-hsl: 219 85% 26%;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  --clr-red: hsl(var(--clr-red-hsl));
+  --clr-blue: hsl(var(--clr-blue-hsl));
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
+  --clr-n-hsl-1: 210 60% 98%;
+  --clr-n-hsl-2: 211 68% 94%;
+  --clr-n-hsl-3: 205 33% 90%;
+  --clr-n-hsl-4: 219 63% 63%;
+  --clr-n-hsl-5: 219 12% 42%;
+  --clr-n-hsl-6: 224 21% 14%;
+
+  --clr-n-1: hsl(var(--clr-n-hsl-1));
+  --clr-n-2: hsl(var(--clr-n-hsl-2));
+  --clr-n-3: hsl(var(--clr-n-hsl-3));
+  --clr-n-4: hsl(var(--clr-n-hsl-4));
+  --clr-n-5: hsl(var(--clr-n-hsl-5));
+  --clr-n-6: hsl(var(--clr-n-hsl-6));
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+html {
+  box-sizing: border-box;
 }
-a:hover {
-  color: #535bf2;
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+  font: inherit;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+pre {
+  margin: 0;
 }
 
 body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-.card {
-  padding: 2em;
-}
-
-#app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+  font-family: "Plus Jakarta Sans", sans-serif;
 }
