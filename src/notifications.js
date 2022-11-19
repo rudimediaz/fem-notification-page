@@ -1,4 +1,4 @@
-//@ts-check
+import { derived, writable } from "svelte/store";
 
 /**
  * @typedef {Object} UserNotification
@@ -47,7 +47,7 @@ const notifications = [
   {
     id: "344085413008fab7",
     from: "Rizky Hasanuddin",
-    avatar: "public/avatar-rizky-hasanuddin.webp",
+    avatar: "/avatar-rizky-hasanuddin.webp",
     message: "sent you a private message",
     content:
       "Hello, thanks for setting up the Chess Club. I've been a member for a few weeks now and I'm already having lots of fun and improving my game.",
@@ -87,4 +87,35 @@ const notifications = [
   },
 ];
 
-export default notifications;
+export function useNotificationStore() {
+  const _items = writable(notifications);
+  const unread = derived(_items, (val) => {
+    return val.filter((v) => v.read === false).length;
+  });
+  const items = derived(_items, (v) => v);
+  /**
+   *
+   * @param {string} id
+   *
+   */
+  function setRead(id, read = true) {
+    _items.update((items) => {
+      return items.reduce((a, c) => {
+        if (c.id === id) {
+          const updated = { ...c, read };
+          return [...a, updated];
+        }
+
+        return [...a, c];
+      }, []);
+    });
+  }
+
+  function setAllRead() {
+    _items.update((its) => {
+      return its.map((it) => ({ ...it, read: true }));
+    });
+  }
+
+  return /**@type {const} */ ({ setRead, unread, items, setAllRead });
+}
