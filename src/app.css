@@ -8,7 +8,7 @@
   --clr-n-hsl-1: 210 60% 98%;
   --clr-n-hsl-2: 211 68% 94%;
   --clr-n-hsl-3: 205 33% 90%;
-  --clr-n-hsl-4: 219 63% 63%;
+  --clr-n-hsl-4: 219 14% 63%;
   --clr-n-hsl-5: 219 12% 42%;
   --clr-n-hsl-6: 224 21% 14%;
 
@@ -45,4 +45,5 @@ pre {
 
 body {
   font-family: "Plus Jakarta Sans", sans-serif;
+  background-color: var(--clr-n-1);
 }
