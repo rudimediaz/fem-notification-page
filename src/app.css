@@ -8,8 +8,8 @@
   --clr-n-hsl-1: 210 60% 98%;
   --clr-n-hsl-2: 211 68% 94%;
   --clr-n-hsl-3: 205 33% 90%;
-  --clr-n-hsl-4: 219 14% 63%;
-  --clr-n-hsl-5: 219 12% 42%;
+  --clr-n-hsl-4: 219 14% 46%;
+  --clr-n-hsl-5: 219 43% 42%;
   --clr-n-hsl-6: 224 21% 14%;
 
   --clr-n-1: hsl(var(--clr-n-hsl-1));
