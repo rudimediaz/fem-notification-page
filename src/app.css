@@ -47,3 +47,9 @@ body {
   font-family: "Plus Jakarta Sans", sans-serif;
   background-color: var(--clr-n-1);
 }
+
+footer {
+  margin-block-start: 5rem;
+  padding-block: 1rem;
+  background-color: #fff;
+}
