@@ -3,6 +3,7 @@ import NotificationList from "./NotificationList.svelte";
 </script>
 
 <div class="page-wrapper">
+  <h1 class="sr-only">Notification</h1>
   <div class="container">
     <NotificationList class="notification-list" />
   </div>
