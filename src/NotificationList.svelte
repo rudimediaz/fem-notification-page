@@ -5,8 +5,11 @@ import { useNotificationStore } from "./notifications";
 const {
   unread,
   setAllRead,
+  setRead,
   items: notificationItems,
 } = useNotificationStore();
+
+$: isAnyUnread = $unread > 0;
 
 /**
  * @param {MouseEvent} ev
@@ -15,12 +18,22 @@ function handleAllRead(ev) {
   ev.preventDefault();
   setAllRead();
 }
+
+/**
+ *
+ * @param {CustomEvent<{id : string}>} ev
+ */
+function handleCardClick(ev) {
+  setRead(ev.detail.id);
+}
 </script>
 
 <div class={`${$$props.class} root`}>
   <div class="heading">
     <span class="title">Notifications</span>
-    <div class="badge">{$unread}</div>
+    <div class="badge" data-is-any-unread={isAnyUnread}>
+      {$unread}
+    </div>
     <a href="#!" class="action" on:click={handleAllRead}
       >Mark all as read</a
     >
@@ -28,6 +41,7 @@ function handleAllRead(ev) {
   <div class="body">
     {#each $notificationItems as notificationItem}
       <NotificationCard
+        id={notificationItem.id}
         avatar={notificationItem.avatar}
         message={notificationItem.message}
         subject={notificationItem.subject}
@@ -36,6 +50,7 @@ function handleAllRead(ev) {
         notificationFrom={notificationItem.from}
         content={notificationItem.content}
         isRead={notificationItem.read}
+        on:subjectclick={handleCardClick}
       />
     {/each}
   </div>
@@ -88,6 +103,10 @@ function handleAllRead(ev) {
   border-radius: 0.5rem;
   margin-inline-start: 1rem;
   margin-inline-end: auto;
+}
+
+.badge[data-is-any-unread="false"] {
+  visibility: collapse;
 }
 
 .action,

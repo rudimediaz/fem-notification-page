@@ -1,4 +1,8 @@
 <script>
+import { createEventDispatcher } from "svelte";
+
+/** @type {string}*/
+export let id;
 /** @type {string}*/
 export let avatar;
 /** @type {string}*/
@@ -16,11 +20,14 @@ export let content;
 /** @type {boolean}*/
 export let isRead;
 
+const dispatch = createEventDispatcher();
+
 /**
  * @param {Event} e
  */
 function handleSubjectClick(e) {
   e.stopImmediatePropagation();
+  dispatch("subjectclick", { id });
 }
 </script>
 
@@ -29,7 +36,9 @@ function handleSubjectClick(e) {
     <img src={avatar} alt="avatar" />
   </div>
   <div data-subject-media={isMedia} class="copy">
-    <span class="sender">{notificationFrom}&nbsp;</span>
+    <a href="#!" on:click={handleSubjectClick} class="sender"
+      >{notificationFrom}&nbsp;</a
+    >
     <span>{message}&nbsp;</span>
     {#if subject && isMedia === false}
       <a href="#!" class="subject" on:click={handleSubjectClick}
@@ -57,8 +66,10 @@ function handleSubjectClick(e) {
 </div>
 
 <style>
-a,
-a:visited {
+/*
+  use :where to prevent specify issue 
+*/
+:where(a, a:visited) {
   text-decoration: none;
   color: inherit;
 }
