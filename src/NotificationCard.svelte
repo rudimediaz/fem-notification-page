@@ -140,6 +140,7 @@ function handleSubjectClick(e) {
 .content p {
   padding: 1em;
   border: 1pt solid var(--clr-n-3);
+  border-radius: 0.5rem;
 }
 
 @media (hover: hover) {
