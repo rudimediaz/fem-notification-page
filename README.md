@@ -1,47 +1,338 @@
-# Svelte + Vite
+# Frontend Mentor - Notifications page solution
 
-This template should help get you started developing with Svelte in Vite.
+This is a solution to the [Notifications page challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/notifications-page-DqK5QAmKbC). Frontend Mentor challenges help you improve your coding skills by building realistic projects. 
 
-## Recommended IDE Setup
+## Table of contents
 
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
+- [Overview](#overview)
+  - [The challenge](#the-challenge)
+  - [Screenshot](#screenshot)
+  - [Links](#links)
+- [My process](#my-process)
+  - [Built with](#built-with)
+  - [What I learned](#what-i-learned)
+  - [Useful resources](#useful-resources)
+- [Author](#author)
 
-## Need an official Svelte framework?
 
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
 
-## Technical considerations
+## Overview
 
-**Why use this over SvelteKit?**
+### The challenge
 
-- It brings its own routing solution which might not be preferable for some users.
-- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
+Users should be able to:
 
-This template contains as little as possible to get started with Vite + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
+- Distinguish between "unread" and "read" notifications
+- Select "Mark all as read" to toggle the visual state of the unread notifications and set the number of unread messages to zero
+- View the optimal layout for the interface depending on their device's screen size
+- See hover and focus states for all interactive elements on the page
 
-Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
+### Screenshot
 
-**Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
+![](./screenshot.jpg)
 
-Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
 
-**Why include `.vscode/extensions.json`?**
+### Links
 
-Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
+- Solution URL: [Github](https://github.com/rudimediaz/fem-notification-page)
+- Live Site URL: [Live Site](https://rudhifemnotif.netlify.app/)
 
-**Why enable `checkJs` in the JS template?**
+## My process
 
-It is likely that most cases of changing variable types in runtime are likely to be accidental, rather than deliberate. This provides advanced typechecking out of the box. Should you like to take advantage of the dynamically-typed nature of JavaScript, it is trivial to change the configuration.
+### Built with
 
-**Why is HMR not preserving my local component state?**
+- Semantic HTML5 markup
+- CSS custom properties
+- Flexbox
+- CSS Grid
+- Mobile-first workflow
+- [Svelte](https://svelte.dev/) - JS library
 
-HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/rixo/svelte-hmr#svelte-hmr).
 
-If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
 
-```js
-// store.js
-// An extremely simple external store
-import { writable } from 'svelte/store'
-export default writable(0)
+### What I learned
+
+To make UI react to state change.
+
+ - Logic
+
+ ```js
+ import { derived, writable } from "svelte/store";
+
+/**
+ * @typedef {Object} UserNotification
+ * @property {string} id
+ * @property {string} from
+ * @property {string} avatar
+ * @property {string=} subject
+ * @property {string} message
+ * @property {boolean} isMedia
+ * @property {string=} content
+ * @property {boolean} read
+ * @property {string} occured
+ */
+
+/** @type {Array<UserNotification>} */
+const notifications = [
+  {
+    id: "fdb21fb099c46ede",
+    from: "Mark Webber",
+    avatar: "/avatar-mark-webber.webp",
+    subject: "My first tournament today!",
+    message: "reacted to your recent post",
+    isMedia: false,
+    read: false,
+    occured: "1m ago",
+  },
+  {
+    id: "94bd23cacb9db5c2",
+    from: "Angela Gray",
+    avatar: "/avatar-angela-gray.webp",
+    message: "followed you",
+    isMedia: false,
+    read: false,
+    occured: "5m ago",
+  },
+  {
+    id: "0431792fb45e203f",
+    from: "Jacob Thompson",
+    avatar: "/avatar-jacob-thompson.webp",
+    subject: "Chess Club",
+    message: "has joined your group",
+    isMedia: false,
+    read: false,
+    occured: "1 day ago",
+  },
+  {
+    id: "344085413008fab7",
+    from: "Rizky Hasanuddin",
+    avatar: "/avatar-rizky-hasanuddin.webp",
+    message: "sent you a private message",
+    content:
+      "Hello, thanks for setting up the Chess Club. I've been a member for a few weeks now and I'm already having lots of fun and improving my game.",
+    isMedia: false,
+    read: true,
+    occured: "5 days ago",
+  },
+  {
+    id: "aac40c685307074a",
+    from: "Kimberly Smith",
+    avatar: "/avatar-kimberly-smith.webp",
+    message: "commented on your picture",
+    subject: "/image-chess.webp",
+    isMedia: true,
+    read: true,
+    occured: "1 week ago",
+  },
+  {
+    id: "6be26b92146532fd",
+    from: "Nathan Peterson",
+    avatar: "/avatar-nathan-peterson.webp",
+    subject: "5 end-game strategies to increase your win rate",
+    message: "reacted to your recent post",
+    isMedia: false,
+    read: true,
+    occured: "2 weeks ago",
+  },
+  {
+    id: "3256cea038f383bf",
+    from: "Anna Kim",
+    avatar: "/avatar-anna-kim.webp",
+    subject: "Chess Club",
+    message: "left the group",
+    isMedia: false,
+    read: true,
+    occured: "2 weeks ago",
+  },
+];
+
+export function useNotificationStore() {
+  const _items = writable(notifications);
+  const unread = derived(_items, (val) => {
+    return val.filter((v) => v.read === false).length;
+  });
+  const items = derived(_items, (v) => v);
+  /**
+   *
+   * @param {string} id
+   *
+   */
+  function setRead(id, read = true) {
+    _items.update((items) => {
+      return items.reduce((a, c) => {
+        if (c.id === id) {
+          const updated = { ...c, read };
+          return [...a, updated];
+        }
+
+        return [...a, c];
+      }, []);
+    });
+  }
+
+  function setAllRead() {
+    _items.update((its) => {
+      return its.map((it) => ({ ...it, read: true }));
+    });
+  }
+
+  return /**@type {const} */ ({ setRead, unread, items, setAllRead });
+}
+
+ ```
+
+ - Markup
+```html
+<script>
+import NotificationCard from "./NotificationCard.svelte";
+import { useNotificationStore } from "./notifications";
+
+const {
+  unread,
+  setAllRead,
+  setRead,
+  items: notificationItems,
+} = useNotificationStore();
+
+$: isAnyUnread = $unread > 0;
+
+/**
+ * @param {MouseEvent} ev
+ */
+function handleAllRead(ev) {
+  ev.preventDefault();
+  setAllRead();
+}
+
+/**
+ *
+ * @param {CustomEvent<{id : string}>} ev
+ */
+function handleCardClick(ev) {
+  setRead(ev.detail.id);
+}
+</script>
+
+<div class={`${$$props.class} root`}>
+  <div class="heading">
+    <span class="title">Notifications</span>
+    <div class="badge" data-is-any-unread={isAnyUnread}>
+      {$unread}
+    </div>
+    <a href="#!" class="action" on:click={handleAllRead}
+      >Mark all as read</a
+    >
+  </div>
+  <div class="body">
+    {#each $notificationItems as notificationItem}
+      <NotificationCard
+        id={notificationItem.id}
+        avatar={notificationItem.avatar}
+        message={notificationItem.message}
+        subject={notificationItem.subject}
+        isMedia={notificationItem.isMedia}
+        occured={notificationItem.occured}
+        notificationFrom={notificationItem.from}
+        content={notificationItem.content}
+        isRead={notificationItem.read}
+        on:subjectclick={handleCardClick}
+      />
+    {/each}
+  </div>
+</div>
+
+<style>
+.root {
+  color: var(--clr-n-5);
+  background-color: #fff;
+  padding-inline: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding-block: 1rem;
+  border-radius: 0.75rem;
+  box-shadow: 0px 2px 5px 1px hsl(var(--clr-n-5) / 0.7),
+    0px 4px 8px 2px hsl(var(--clr-n-5) / 0.6),
+    0px 8px 10px 4px hsl(var(--clr-n-5) / 0.5);
+}
+
+@media (max-width: 25em) {
+  .root {
+    font-size: clamp(0.875rem, 0.5rem + 0.42vw, 1rem);
+  }
+}
+
+.heading {
+  display: flex;
+  align-items: center;
+}
+
+.title,
+.badge {
+  font-weight: 800;
+}
+
+.title {
+  color: var(--clr-n-6);
+  font-size: 1.5rem;
+}
+@media (max-width: 25em) {
+  .title {
+    font-size: clamp(1.25rem, 1.25rem + 0.8333333333333334vw, 1.5rem);
+  }
+}
+.badge {
+  background-color: var(--clr-blue);
+  color: #fff;
+  padding: 0.25rem 0.75em;
+  border-radius: 0.5rem;
+  margin-inline-start: 1rem;
+  margin-inline-end: auto;
+}
+
+.badge[data-is-any-unread="false"] {
+  visibility: collapse;
+}
+
+.action,
+.action:visited {
+  color: inherit;
+}
+
+.action {
+  text-decoration: none;
+}
+
+@media (hover: hover) {
+  .action:hover {
+    color: var(--clr-blue);
+  }
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+</style>
+
 ```
+
+You can look more in the source code (not too much file).
+
+### Useful resources
+
+- [Svelte Interactive Tutorial](https://svelte.dev/tutorial) - This is about getting started with svelte
+
+
+
+
+## Author
+
+
+- Frontend Mentor - [@rudimediaz](https://www.frontendmentor.io/profile/rudimediaz)
+- Twitter - [@rudimediaz](https://www.twitter.com/rudimediaz)
+
+
+
+
